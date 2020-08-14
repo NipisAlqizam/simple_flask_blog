@@ -1,15 +1,15 @@
-.arhive-wrapper {
+.archive-wrapper {
   display: inline-block;
 }
-.arhive-wrapper input[type="checkbox"] {
+.archive-wrapper input[type="checkbox"] {
   display: none;
 }
-.arhive-wrapper ul {
+.archive-wrapper ul {
   list-style-type: none;
   /* padding: 0;
   padding-left: 0.5em; */
 }
-.arhive-wrapper label {
+.archive-wrapper label {
   display: block;
   border-bottom: 1px solid #000;
 }
