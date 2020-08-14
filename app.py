@@ -13,8 +13,10 @@ def create():
 
 @app.route('/submit',methods=['POST'])
 def submit():
+    print(request.form['title'])
     print(request.form['text'])
-    return redirect('/create')
+    print(request.form)
+    return redirect(url_for('create'))
 
 @app.route('/archive')
 def archive():
