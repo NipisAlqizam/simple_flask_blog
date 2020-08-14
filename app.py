@@ -23,3 +23,6 @@ def archive():
 @app.route('/article/<id_>')
 def article(id_=-1):
     return render_template('article.html')
+
+if __name__ == '__main__':
+    app.run(debug=True)

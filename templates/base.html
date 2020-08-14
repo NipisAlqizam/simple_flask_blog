@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1440, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>{% block title %}{% endblock %}</title>
+  <link rel="stylesheet" href="/static/main.css">
+  {% block css %}
+
+  {% endblock %}
+</head>
+<body>
+  <header>
+    <nav>
+      <ul class="main_menu">
+        <li><a href="/">Главная</a></li>
+        <li><a href="/archive">Архив</a></li>
+        <li><a href="/about">О блоге</a></li>
+        <li class="login"><a href="#">Вход</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    {% block content %}
+
+    {% endblock %}
+  </main>
+</body>
+</html>
