@@ -13,6 +13,15 @@ def create_article(title: str, text: str):
     db_session.add(new_article)
     db_session.commit()
 
+def get_all_articles():
+    from models import Article
+    return Article.query.all()
+
+def get_article_by_id(id):
+    from models import Article
+    return Article.query.filter(Article.id == id).first()
+
+
 def init_db():
     import models
     Base.metadata.create_all(engine)
