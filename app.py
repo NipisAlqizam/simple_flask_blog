@@ -53,7 +53,8 @@ def update(id):
 def archive():
     archive = db.get_articles_archive()
     print(archive)
-    return render_template('archive.html', archive=archive)
+    no_articles = len(archive) == 0
+    return render_template('archive.html', archive=archive, no_articles=no_articles)
 
 
 @app.route('/article/<id>')

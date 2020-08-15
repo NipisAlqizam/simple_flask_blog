@@ -9,6 +9,9 @@
 {% endblock %}
 
 {% block content %}
+{% if no_articles %}
+  <h1>Пока что здесь нет статей... Пока что.</h1>
+{% endif %}
 <div class="archive-wrapper">
   <ul class="archive">
     {% for year in archive %}
