@@ -12,7 +12,9 @@ def shutdown_session(exception=None):
 
 @app.route('/')
 def index():
-    return render_template('main.html')
+    articles = db.get_articles_preview()
+    no_articles = len(articles) == 0
+    return render_template('main.html', articles=articles, no_articles=no_articles)
 
 @app.route('/create')
 def create():
@@ -20,7 +22,6 @@ def create():
 
 @app.route('/submit',methods=['POST'])
 def submit():
-    logging.debug(print(request.form))
     db.create_article(request.form['title'], request.form['text'])
     return redirect(url_for('create'))
 
@@ -32,7 +33,7 @@ def archive():
 def article(id):
     article = db.get_article_by_id(id)
     if article == None:
-        return render_template('notfound.html')
+        return render_template('notfound.html'), 404
     return render_template('article.html', title=article.title, text=article.text)
 
 if __name__ == '__main__':

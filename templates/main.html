@@ -5,19 +5,14 @@
 {% endblock %}
 
 {% block content %}
+{% if no_articles %}
+  <h1>Пока что здесь нет статей... Пока что.</h1>
+{% endif %}
+{% for article in articles %}
 <div class="card">
-  <h2>Заголовок</h2>
-  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus perferendis incidunt fugiat enim, quis tenetur earum nisi, dolorem. Unde voluptates corrupti repudiandae perferendis deleniti corporis eos rerum quidem tenetur eligendi quae, molestiae porro, nisi deserunt atque modi ut quam. Nostrum cum labore in repellat fugit tempora ut illo inventore veniam.</p>
-  <a href="/article/0">Читать далее</a>
+  <h2>{{article['title']}}</h2>
+  <p>{{article['text']}}</p>
+  <a href="/article/{{article['id']}}">Читать далее</a>
 </div>
-<div class="card">
-  <h2>Заголовок</h2>
-  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum ullam blanditiis ipsam nisi odit sed perspiciatis libero tenetur accusamus. Esse obcaecati natus quaerat adipisci in maiores odit voluptatum, dicta ut!</p>
-  <a href="/article/1">Читать далее</a>
-</div>
-<div class="card">
-  <h2>Заголовок</h2>
-  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum ullam blanditiis ipsam nisi odit sed perspiciatis libero tenetur accusamus. Esse obcaecati natus quaerat adipisci in maiores odit voluptatum, dicta ut! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia, ratione.</p>
-  <a href="/article/2">Читать далее</a>
-</div>
+{% endfor %}
 {% endblock %}
