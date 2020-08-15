@@ -1,6 +1,6 @@
 from flask import Flask
 from flask import render_template
-from flask import request, redirect, url_for
+from flask import request, redirect, url_for, abort
 import db
 import logging
 app = Flask(__name__)
@@ -35,6 +35,20 @@ def submit():
     return redirect(url_for('create'))
 
 
+@app.route('/edit/<id>')
+def edit(id):
+    article = db.get_article_by_id(id)
+    if article == None:
+        abort(404)
+    return render_template('edit.html', id=article.id, title=article.title, text=article.text)
+
+
+@app.route('/update/<id>', methods=['POST'])
+def update(id):
+    db.update_article(id, request.form['title'], request.form['text'])
+    return redirect(url_for('article', id=id))
+
+
 @app.route('/archive')
 def archive():
     archive = db.get_articles_archive()
@@ -46,7 +60,7 @@ def archive():
 def article(id):
     article = db.get_article_by_id(id)
     if article == None:
-        return render_template('notfound.html'), 404
+        abort(404)
     return render_template('article.html', title=article.title, text=article.text)
 
 

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Редактирование статьи
+{% endblock %}
+
+{% block css %}
+  <link rel="stylesheet" href="{{url_for('static', filename='create.css')}}">
+{% endblock %}
+
+{% block content %}
+  <form action="{{url_for('update', id=id)}}" method="post">
+    <input type="text" name="title" placeholder="Название" required value="{{title}}">
+    <textarea name="text" rows="20" placeholder="Текст статьи" required>{{text}}</textarea>
+    <input type="submit">
+  </form>
+{% endblock %}

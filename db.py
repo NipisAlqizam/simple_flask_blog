@@ -37,15 +37,27 @@ def get_articles_preview():
     return res[::-1]
 
 
+def update_article(id: int, new_title: str, new_text: str):
+    from models import Article
+    article = Article.query.filter_by(id=id).first()
+    article.title = new_title
+    article.text = new_text
+    db_session.commit()
+
+
 def get_articles_archive():
     from models import Article
     articles = Article.query.all()
     res = {}
     for article in articles:
         if article.created.year not in res:
-            res[article.created.year] = {article.created.month:[(article.id, article.title)]}
+            res[article.created.year] = {
+                article.created.month: [(article.id, article.title)]
+            }
         else:
-            res[article.created.year][article.created.month].append((article.id, article.title))
+            res[article.created.year][article.created.month].append(
+                (article.id, article.title)
+            )
     return res
 
 
