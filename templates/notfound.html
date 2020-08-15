@@ -4,6 +4,10 @@
   404 Not found
 {% endblock %}
 
+{% block css %}
+  <link rel="stylesheet" href="{{url_for('static', filename='404.css')}}">
+{% endblock %}
+
 {% block content %}
   <div class="wrapper">
     <h1>404. Nothing here.</h1>
