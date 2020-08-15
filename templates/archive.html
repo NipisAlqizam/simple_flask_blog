@@ -11,18 +11,18 @@
 {% block content %}
 <div class="archive-wrapper">
   <ul class="archive">
-    {% for year in range(2019,2021) %}
+    {% for year in archive %}
       <li>
         <input type="checkbox" id="year-{{year}}">
         <label for="year-{{year}}">{{year}}</label>
         <ul>
-          {% for month in range(1,5) %}
+          {% for month in archive[year] %}
             <li>
               <input type="checkbox" id="month-{{month}}-{{year}}">
-              <label for="month-{{month}}-{{year}}">Month</label>
+              <label class="month" for="month-{{month}}-{{year}}">{{month}}</label>
               <ul>
-                {% for _ in range(5) %}
-                  <li><a href="/article/0">Lorem ipsum dolor sit amet.</a></li>
+                {% for article in archive[year][month] %}
+                  <li><a href="/article/{{article[0]}}">{{article[1]}}</a></li>
                 {% endfor %}
               </ul>
             </li>
@@ -32,4 +32,13 @@
     {% endfor %}
   </ul>
 </div>
+<script type="text/javascript">
+  "use strict"
+  var labels = document.querySelectorAll("label.month");
+  var months = ['', 'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+  labels.forEach(month => {
+    month.innerHTML = months[month.innerHTML];
+  });
+
+</script>
 {% endblock %}
