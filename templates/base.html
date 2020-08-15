@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=1440, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>{% block title %}{% endblock %}</title>
-  <link rel="stylesheet" href="/static/main.css">
+  <link rel="stylesheet" href="{{url_for('static', filename='main.css')}}">
   {% block css %}
 
   {% endblock %}

@@ -2,7 +2,7 @@
 {% extends "base.html" %}
 
 {% block css %}
-  <link rel="stylesheet" href="static/create.css">
+  <link rel="stylesheet" href="{{url_for('static', filename='create.css')}}">
 {% endblock %}
 
 {% block title %}

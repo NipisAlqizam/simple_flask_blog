@@ -30,9 +30,7 @@ def archive():
 
 @app.route('/article/<id>')
 def article(id):
-    # if id == 0:
-        return render_template('notfound.html'), 404
-    # return render_template('article.html')
+    return render_template('article.html')
 
 if __name__ == '__main__':
     db.init_db()
