@@ -1,7 +1,14 @@
 from flask import Flask
 from flask import render_template
 from flask import request, redirect, url_for
+import db
+import logging
 app = Flask(__name__)
+
+@app.teardown_appcontext
+def shutdown_session(exception=None):
+    from db import db_session
+    db_session.remove()
 
 @app.route('/')
 def index():
@@ -13,18 +20,20 @@ def create():
 
 @app.route('/submit',methods=['POST'])
 def submit():
-    print(request.form['title'])
-    print(request.form['text'])
-    print(request.form)
+    logging.debug(print(request.form))
+    db.create_article(request.form['title'], request.form['text'])
     return redirect(url_for('create'))
 
 @app.route('/archive')
 def archive():
     return render_template('archive.html')
 
-@app.route('/article/<id_>')
-def article(id_=-1):
-    return render_template('article.html')
+@app.route('/article/<id>')
+def article(id):
+    # if id == 0:
+        return render_template('notfound.html'), 404
+    # return render_template('article.html')
 
 if __name__ == '__main__':
+    db.init_db()
     app.run(debug=True)

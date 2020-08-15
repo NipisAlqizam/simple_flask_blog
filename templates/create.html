@@ -11,8 +11,8 @@
 
 {% block content %}
   <form action="submit" method="post">
-    <input type="text" name="title" placeholder="Название">
-    <textarea name="text" rows="20" placeholder="Текст статьи"></textarea>
+    <input type="text" name="title" placeholder="Название" required>
+    <textarea name="text" rows="20" placeholder="Текст статьи" required></textarea>
     <input type="submit">
   </form>
 {% endblock %}
