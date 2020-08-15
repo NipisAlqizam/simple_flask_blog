@@ -58,9 +58,25 @@ main h2 {
 }
 .card h2 {
   margin: 0;
-  border-bottom: 1px solid #333333;
   padding-left: 0.25em;
 }
+
+.card .created {
+  font-style: italic;
+  font-size: 14px;
+  margin-left: auto;
+}
+
+.card .title {
+  border-bottom: 1px solid #333333;
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
 .card p {
   margin: 0;
   padding: 1em 1em 0.5em 1em;

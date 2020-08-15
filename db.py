@@ -32,7 +32,8 @@ def get_articles_preview():
         id = article.id
         title = article.title
         text = get_preview(article.text)
-        res.append({'id': id, 'title': title, 'text': text})
+        date = article.created.strftime('%d-%m-%y')
+        res.append({'id': id, 'title': title, 'text': text, 'created': date})
     return res[::-1]
 
 
