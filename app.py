@@ -123,6 +123,18 @@ def article(id):
     created_date = article.created.strftime('%d-%m-%y')
     return render_template('article.html', title=article.title, text=article.text, date=created_date, author=article.author.username, id=article.id)
 
+@app.route('/change_password', methods=['GET','POST'])
+def change_password():
+    if 'username' not in session:
+        abort(403)
+    if request.method == 'POST':
+        if not db.check_user(session['username'], request.form['current_password']):
+            return render_template('change_password.html', failed=True)
+        db.update_user_password(session['username'], request.form['new_password'])
+        return redirect(url_for('index'))
+
+    return render_template('change_password.html')
+
 
 if __name__ == '__main__':
     db.init_db()

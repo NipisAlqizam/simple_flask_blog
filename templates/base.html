@@ -22,12 +22,15 @@
           {% if session['is_admin'] %}
             <li><a href="/admin">Админка</a></li>
           {% endif %}
+          <li><a href="{{url_for('change_password')}}">Сменить пароль</a></li>
           <li><a href="/logout">Выйти</a></li>
         {% elif session['is_admin'] and 'username' in session %}
           <li class="right"><a href="/admin">Админка</a></li>
+          <li><a href="{{url_for('change_password')}}">Сменить пароль</a></li>
           <li><a href="/logout">Выйти</a></li>
         {% elif 'username' in session %}
-          <li class="right"><a href="/logout">Выйти</a></li>
+          <li class="right"><a href="{{url_for('change_password')}}">Сменить пароль</a></li>
+          <li><a href="/logout">Выйти</a></li>
         {% else %}
           <li class="right"><a href="/login">Войти</a></li>
           <li><a href="/register">Регистрация</a></li>

@@ -73,6 +73,13 @@ def update_article(id: int, new_title: str, new_text: str):
     db_session.commit()
 
 
+def update_user_password(username: str, new_password: str):
+    from models import User
+    user = get_user(username)
+    user.password = get_password_hash(new_password)
+    db_session.commit()
+
+
 def get_articles_archive():
     from models import Article
     articles = Article.query.all()
