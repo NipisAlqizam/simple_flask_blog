@@ -1,52 +1,60 @@
 .archive-wrapper {
   display: inline-block;
 }
+
 .archive-wrapper input[type="checkbox"] {
   display: none;
 }
+
 .archive-wrapper ul {
   list-style-type: none;
-  /* padding: 0;
-  padding-left: 0.5em; */
 }
+
 .archive-wrapper label {
   display: block;
   border-bottom: 1px solid #000;
 }
+
 .archive ul ul li {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 15em;
-
   margin-bottom: 0.125em;
 }
+
 .archive ul ul li.last {
   margin-bottom: 0;
 }
-.archive input[type="checkbox"] ~ ul {
+
+.archive input[type="checkbox"]~ul {
   height: 0;
   -webkit-transform: scaleY(0);
   -ms-transform: scaleY(0);
   transform: scaleY(0);
 }
-.archive input[type="checkbox"]:checked ~ ul {
+
+.archive input[type="checkbox"]:checked~ul {
   height: auto;
   -webkit-transform: scaleY(1);
   -ms-transform: scaleY(1);
   transform: scaleY(1);
 }
+
 .archive label {
   cursor: pointer;
 }
+
 .archive label:hover {
   background: #219807;
   color: #ebe9e9;
   font-weight: bold;
 }
+
 .archive a {
   color: #161616;
 }
+
 .archive a:hover {
   color: #219807;
 }

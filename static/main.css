@@ -4,22 +4,24 @@ html {
   font-family: Roboto, sans-serif;
   color: #161616;
 }
+
 body {
   margin: 0;
   padding: 0;
 }
+
 nav {
   background: #282828;
   margin: 0;
-
 }
+
 nav ul {
   margin: 0;
   list-style: none;
   padding: 0;
   display: flex;
-
 }
+
 .main_menu a {
   color: #c8c8c8;
   display: block;
@@ -27,12 +29,15 @@ nav ul {
   border-left: 1px solid #c8c8c8;
   text-decoration: none;
 }
+
 .main_menu li:first-child a {
   border-left: 0 solid #fff;
 }
+
 .login {
   margin-left: auto;
 }
+
 .main_menu li:hover {
   background: #222;
 }
@@ -40,9 +45,11 @@ nav ul {
 main {
   margin: 35px 120px 0 50px;
 }
+
 main h1 {
   margin-left: -20px;
 }
+
 main h2 {
   margin-left: -10px;
 }
@@ -56,6 +63,7 @@ main h2 {
   flex-direction: column;
   margin-bottom: 2em;
 }
+
 .card h2 {
   margin: 0;
   padding-left: 0.25em;
@@ -82,6 +90,7 @@ main h2 {
   padding: 1em 1em 0.5em 1em;
   text-align: justify;
 }
+
 .card a {
   color: #006f12;
   margin-left: auto;

@@ -17,6 +17,7 @@ class Article(Base):
     def __repr__(self):
         return f'<Article "{self.title}">'
 
+
 class User(Base):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
@@ -25,8 +26,11 @@ class User(Base):
     is_author = Column(Boolean)
     is_admin = Column(Boolean)
 
-    articles = relationship('Article', order_by=Article.id, back_populates='author')
-    comments = relationship('Comment', order_by=Article.id, back_populates='user')
+    articles = relationship(
+        'Article', order_by=Article.id, back_populates='author')
+    comments = relationship(
+        'Comment', order_by=Article.id, back_populates='user')
+
 
 class Comment(Base):
     __tablename__ = 'comments'

@@ -3,6 +3,7 @@ main {
   display: -ms-flex;
   display: flex;
 }
+
 .wrapper {
   margin: 0 auto;
   display: -webkit-flex;
@@ -12,10 +13,11 @@ main {
   -ms-flex-direction: column;
   flex-direction: column;
 }
+
 .wrapper h1 {
   margin: 0 auto !important;
-
 }
+
 img {
   margin: 0;
 }
