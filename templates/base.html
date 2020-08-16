@@ -17,7 +17,21 @@
         <li><a href="/">Главная</a></li>
         <li><a href="/archive">Архив</a></li>
         <li><a href="/about">О блоге</a></li>
-        <li class="login"><a href="/create">Создать статью</a></li>
+        {% if 'username' in session and session['is_author'] %}
+          <li class="right"><a href="/create">Создать статью</a></li>
+          {% if session['is_admin'] %}
+            <li><a href="/admin">Админка</a></li>
+          {% endif %}
+          <li><a href="/logout">Выйти</a></li>
+        {% elif session['is_admin'] and 'username' in session %}
+          <li class="right"><a href="/admin">Админка</a></li>
+          <li><a href="/logout">Выйти</a></li>
+        {% elif 'username' in session %}
+          <li class="right"><a href="/logout">Выйти</a></li>
+        {% else %}
+          <li class="right"><a href="/login">Войти</a></li>
+          <li><a href="/register">Регистрация</a></li>
+        {% endif %}
       </ul>
     </nav>
   </header>

@@ -10,7 +10,7 @@
 
 {% block content %}
   <div class="wrapper">
-    <h1>404. Nothing here.</h1>
+    <h1>{{error_text}}</h1>
     <img src="{{url_for('static', filename='rickroll.jpg')}}" alt="You've been rickrolled!">
   </div>
 {% endblock %}

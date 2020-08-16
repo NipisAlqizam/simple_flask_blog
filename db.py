@@ -2,6 +2,7 @@ from sqlalchemy import *
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, scoped_session
 from datetime import datetime
+from hashlib import sha256
 
 engine = create_engine('sqlite:///test.db', echo=True)
 db_session = scoped_session(sessionmaker(bind=engine))
@@ -13,6 +14,13 @@ def create_article(title: str, text: str):
     from models import Article
     new_article = Article(title=title, text=text, created=datetime.now())
     db_session.add(new_article)
+    db_session.commit()
+
+
+def create_user(name: str, password: str, is_author:bool = False, is_admin:bool = False):
+    from models import User
+    user = User(username=name, password=get_password_hash(password), is_author=is_author, is_admin=is_admin)
+    db_session.add(user)
     db_session.commit()
 
 
@@ -35,6 +43,21 @@ def get_articles_preview():
         date = article.created.strftime('%d-%m-%y')
         res.append({'id': id, 'title': title, 'text': text, 'created': date})
     return res[::-1]
+
+
+def get_user(username: str):
+    from models import User
+    return User.query.filter_by(username=username).first()
+
+
+def check_user(username: str, password: str) -> bool:
+    from models import User
+    user = User.query.filter_by(username=username).first()
+    if user == None:
+        return False
+    if get_password_hash(password) != user.password:
+        return False
+    return True
 
 
 def update_article(id: int, new_title: str, new_text: str):
@@ -66,9 +89,18 @@ def get_article_by_id(id):
     return Article.query.filter(Article.id == id).first()
 
 
+def get_password_hash(password: str) -> str:
+    hash = sha256(password.encode('utf-8')).hexdigest()
+    return hash
+
+
+
 def init_db():
     import models
     Base.metadata.create_all(engine)
+    if models.User.query.first() == None:
+        create_user('admin', 'admin', True, True)
+
 
 
 if __name__ == '__main__':

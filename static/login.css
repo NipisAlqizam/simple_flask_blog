@@ -42,3 +42,9 @@
   background: #e3dede;
   color: #282828;
 }
+
+.failure {
+  color: #ff3c3c;
+  margin-top: 0;
+  margin-bottom: 0.5em;
+}
