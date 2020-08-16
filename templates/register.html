@@ -16,9 +16,14 @@
   <input type="text" name="login" placeholder="Логин">
   <input type="password" name="password" placeholder="Пароль">
   <input type="password" name="repeat_password" placeholder="Повторите пароль"></input>
-  <div class="info">
+  <div class="info password_info">
     Пароли не совпадают.
   </div>
+  {% if username_taken %}
+  <div class="info">
+    Имя пользователя занято.
+  </div>
+  {% endif %}
   <input type="submit" value="Войти">
 </form>
 </div>

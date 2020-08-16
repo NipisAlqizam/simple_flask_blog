@@ -41,7 +41,7 @@ def create():
 def submit():
     if 'is_author' not in session or not session['is_author']:
         abort(403)
-    db.create_article(request.form['title'], request.form['text'])
+    db.create_article(request.form['title'], request.form['text'], session['username'])
     return redirect(url_for('create'))
 
 
@@ -86,7 +86,16 @@ def login():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        abort(404)
+        from models import User
+        login = request.form['login']
+        password = request.form['password']
+        if db.get_user(login) != None:
+            return render_template('register.html', username_taken=True)
+        db.create_user(login, password)
+        session['username'] = login
+        session['is_author'] = False
+        session['is_admin'] = False
+        return redirect(url_for('index'))
     return render_template('register.html')
 
 

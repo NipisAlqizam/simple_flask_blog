@@ -10,9 +10,10 @@ Base = declarative_base()
 Base.query = db_session.query_property()
 
 
-def create_article(title: str, text: str):
-    from models import Article
-    new_article = Article(title=title, text=text, created=datetime.now())
+def create_article(title: str, text: str, authorname: str):
+    from models import Article, User
+    author = User.query.filter_by(username=authorname).first()
+    new_article = Article(title=title, text=text, created=datetime.now(), author=author)
     db_session.add(new_article)
     db_session.commit()
 
