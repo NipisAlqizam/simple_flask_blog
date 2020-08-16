@@ -1,3 +1,30 @@
 article {
   white-space: pre-wrap;
 }
+
+.info {
+  font-size: 0.875em;
+  font-style: italic;
+  margin-left: 5em;
+}
+
+.title-wrapper {
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  align-items: center;
+}
+
+.update {
+  margin-left: auto;
+  text-decoration: none;
+  color: #e3dede;
+  background: #282828;
+  font-weight: bold;
+  padding: 1em;
+}
+
+.update:hover {
+  background: #e3dede;
+  color: #282828;
+}

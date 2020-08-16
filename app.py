@@ -41,7 +41,8 @@ def create():
 def submit():
     if 'is_author' not in session or not session['is_author']:
         abort(403)
-    db.create_article(request.form['title'], request.form['text'], session['username'])
+    db.create_article(request.form['title'],
+                      request.form['text'], session['username'])
     return redirect(url_for('create'))
 
 
@@ -50,11 +51,18 @@ def edit(id):
     article = db.get_article_by_id(id)
     if article == None:
         abort(404)
+    if 'username' not in session or (article.author.username != session['username'] and not session['is_admin']):
+        abort(403)
     return render_template('edit.html', id=article.id, title=article.title, text=article.text)
 
 
 @app.route('/update/<id>', methods=['POST'])
 def update(id):
+    article = db.get_article_by_id(id)
+    if article == None:
+        abort(404)
+    if 'username' not in session or (article.author.username != session['username'] and not session['is_admin']):
+        abort(403)
     db.update_article(id, request.form['title'], request.form['text'])
     return redirect(url_for('article', id=id))
 
@@ -112,7 +120,8 @@ def article(id):
     article = db.get_article_by_id(id)
     if article == None:
         abort(404)
-    return render_template('article.html', title=article.title, text=article.text)
+    created_date = article.created.strftime('%d-%m-%y')
+    return render_template('article.html', title=article.title, text=article.text, date=created_date, author=article.author.username, id=article.id)
 
 
 if __name__ == '__main__':

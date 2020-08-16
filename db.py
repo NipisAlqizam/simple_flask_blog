@@ -13,14 +13,16 @@ Base.query = db_session.query_property()
 def create_article(title: str, text: str, authorname: str):
     from models import Article, User
     author = User.query.filter_by(username=authorname).first()
-    new_article = Article(title=title, text=text, created=datetime.now(), author=author)
+    new_article = Article(title=title, text=text,
+                          created=datetime.now(), author=author)
     db_session.add(new_article)
     db_session.commit()
 
 
-def create_user(name: str, password: str, is_author:bool = False, is_admin:bool = False):
+def create_user(name: str, password: str, is_author: bool = False, is_admin: bool = False):
     from models import User
-    user = User(username=name, password=get_password_hash(password), is_author=is_author, is_admin=is_admin)
+    user = User(username=name, password=get_password_hash(
+        password), is_author=is_author, is_admin=is_admin)
     db_session.add(user)
     db_session.commit()
 
@@ -42,7 +44,9 @@ def get_articles_preview():
         title = article.title
         text = get_preview(article.text)
         date = article.created.strftime('%d-%m-%y')
-        res.append({'id': id, 'title': title, 'text': text, 'created': date})
+        author = article.author.username
+        res.append({'id': id, 'title': title, 'text': text,
+                    'created': date, 'author': author})
     return res[::-1]
 
 
@@ -95,13 +99,11 @@ def get_password_hash(password: str) -> str:
     return hash
 
 
-
 def init_db():
     import models
     Base.metadata.create_all(engine)
     if models.User.query.first() == None:
         create_user('admin', 'admin', True, True)
-
 
 
 if __name__ == '__main__':

@@ -9,6 +9,14 @@
 {% endblock %}
 
 {% block content %}
-<h1>{{title}}</h1>
+<div class="title-wrapper">
+  <h1>{{title}}</h1>
+  <div class="info">
+    Создано {{date}} пользователем {{author}}.
+  </div>
+  {% if session['username'] == author or session['is_admin'] %}
+    <a href="{{url_for('edit', id=id)}}" class="update">Редактировать</a>
+  {% endif %}
+</div>
 <article>{{text}}</article>
 {% endblock %}
