@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Регистрация
+{% endblock %}
+
+{% block css %}
+  <link rel="stylesheet" href="{{url_for('static', filename='register.css')}}">
+  <script src="{{url_for('static', filename='register.js')}}" charset="utf-8"></script>
+{% endblock %}
+
+{% block content %}
+<div class="login_box">
+<h2>Регистрация</h2>
+<form name="register" action="register" onsubmit="return validatePassword()" method="post">
+  <input type="text" name="login" placeholder="Логин">
+  <input type="password" name="password" placeholder="Пароль">
+  <input type="password" name="repeat_password" placeholder="Повторите пароль"></input>
+  <div class="info">
+    Пароли не совпадают.
+  </div>
+  <input type="submit" value="Войти">
+</form>
+</div>
+{% endblock %}

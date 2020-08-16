@@ -56,6 +56,17 @@ def archive():
     no_articles = len(archive) == 0
     return render_template('archive.html', archive=archive, no_articles=no_articles)
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        abort(404)
+    return render_template('login.html')
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        abort(404)
+    return render_template('register.html')
 
 @app.route('/article/<id>')
 def article(id):
