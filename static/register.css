@@ -43,7 +43,8 @@
   color: #282828;
 }
 
-.incorrect_password {
+.incorrect_password, .incorrect_login, .incorrect_login:focus {
+  outline: none !important;
   border: 2px solid red;
 }
 
@@ -59,5 +60,13 @@
 }
 
 .incorrect_password ~ .password_info {
+  display: block;
+}
+
+.login_info {
+  display: none;
+}
+
+.incorrect_login ~ .login_info {
   display: block;
 }

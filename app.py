@@ -3,6 +3,7 @@ from flask import render_template
 from flask import request, redirect, url_for, abort, session
 import db
 import logging
+import json
 app = Flask(__name__)
 app.secret_key = 'dev'
 
@@ -136,6 +137,12 @@ def change_password():
     return render_template('change_password.html')
 
 
+@app.route('/api/user_exists')
+def user_exists():
+    res = {'exists':db.user_exists(request.args['username'])}
+    return json.dumps(res)
+
+
 if __name__ == '__main__':
     db.init_db()
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0',debug=True)

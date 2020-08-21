@@ -129,6 +129,12 @@ def check_user(username: str, password: str) -> bool:
     return True
 
 
+def user_exists(username: str) -> bool:
+    from models import User
+    user = User.query.filter_by(username=username).first()
+    return user != None
+
+
 def update_article(id: int, new_title: str, new_text: str):
     """
         Меняет заголовок и текст статьи с указаным номером.
