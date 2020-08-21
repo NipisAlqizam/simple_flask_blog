@@ -5,6 +5,7 @@ from datetime import datetime
 from hashlib import sha256
 import markdown
 from markupsafe import Markup
+import re
 
 engine = create_engine('sqlite:///test.db', echo=True)
 db_session = scoped_session(sessionmaker(bind=engine))
@@ -180,7 +181,10 @@ def get_articles_archive():
 
 
 def markdown_to_html(md: str) -> str:
+    print(repr(md))
+    print()
     md = str(Markup.escape(md))
+    md = re.sub('^#', '##', md, flags=re.M)
     html = markdown.markdown(md)
     return Markup(html)
 
@@ -213,6 +217,4 @@ def init_db():
 
 
 if __name__ == '__main__':
-    init_db()
-    print(markdown_to_html(get_article_by_id(2).text))
     print(markdown_to_html('<h1>\n# adfq\n - abc\n - abc\n\nabc\nabc'))
