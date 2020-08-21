@@ -3,6 +3,8 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, scoped_session
 from datetime import datetime
 from hashlib import sha256
+import markdown
+from markupsafe import Markup
 
 engine = create_engine('sqlite:///test.db', echo=True)
 db_session = scoped_session(sessionmaker(bind=engine))
@@ -177,6 +179,12 @@ def get_articles_archive():
     return res
 
 
+def markdown_to_html(md: str) -> str:
+    md = str(Markup.escape(md))
+    html = markdown.markdown(md)
+    return Markup(html)
+
+
 def get_article_by_id(id):
     """
         Возвращает объект статьи с указаным номером.
@@ -206,3 +214,5 @@ def init_db():
 
 if __name__ == '__main__':
     init_db()
+    print(markdown_to_html(get_article_by_id(2).text))
+    print(markdown_to_html('<h1>\n# adfq\n - abc\n - abc\n\nabc\nabc'))

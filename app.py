@@ -121,7 +121,7 @@ def article(id):
     if article == None:
         abort(404)
     created_date = article.created.strftime('%d-%m-%y')
-    return render_template('article.html', title=article.title, text=article.text, date=created_date, author=article.author.username, id=article.id)
+    return render_template('article.html', title=article.title, text=db.markdown_to_html(article.text), date=created_date, author=article.author.username, id=article.id)
 
 @app.route('/change_password', methods=['GET','POST'])
 def change_password():
@@ -138,4 +138,4 @@ def change_password():
 
 if __name__ == '__main__':
     db.init_db()
-    app.run(debug=True)
+    app.run(host='0.0.0.0')
