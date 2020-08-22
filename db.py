@@ -49,6 +49,21 @@ def create_user(name: str, password: str, is_author: bool = False, is_admin: boo
     db_session.commit()
 
 
+def create_comment(username: str, article_id: int, text: str):
+    from models import Comment, User, Article
+    user = User.query.filter_by(username=username).first()
+    article = Article.query.filter_by(id=article_id).first()
+    new_comment = Comment(article=article, user=user, text=text)
+    db_session.add(new_comment)
+    db_session.commit()
+
+
+def get_comments(article_id: int) -> list:
+    from models import Comment
+    comments = Comment.query.filter_by(article_id=article_id).all()
+    return comments
+
+
 def get_preview(text: str) -> str:
     """
         Обрезать первый абзац текста.

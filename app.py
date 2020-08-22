@@ -123,16 +123,28 @@ def article(id):
     if article == None:
         abort(404)
     created_date = article.created.strftime('%d-%m-%y')
-    return render_template('article.html', title=article.title, text=db.markdown_to_html(article.text), date=created_date, author=article.author.username, id=article.id)
+    print(session.get('username'))
+    comments = db.get_comments(id)
+    no_comments = len(comments) == 0
+    return render_template('article.html', title=article.title, text=db.markdown_to_html(article.text), 
+    date=created_date, author=article.author.username, id=article.id, comments=comments, no_comments=no_comments)
 
-@app.route('/change_password', methods=['GET','POST'])
+
+@app.route('/comment/<id>', methods=['POST'])
+def comment(id):
+    db.create_comment(session['username'], id, request.form['comment'])
+    return redirect(url_for('article', id=id))
+
+
+@app.route('/change_password', methods=['GET', 'POST'])
 def change_password():
     if 'username' not in session:
         abort(403)
     if request.method == 'POST':
         if not db.check_user(session['username'], request.form['current_password']):
             return render_template('change_password.html', failed=True)
-        db.update_user_password(session['username'], request.form['new_password'])
+        db.update_user_password(
+            session['username'], request.form['new_password'])
         return redirect(url_for('index'))
 
     return render_template('change_password.html')
@@ -140,10 +152,10 @@ def change_password():
 
 @app.route('/api/user_exists')
 def user_exists():
-    res = {'exists':db.user_exists(request.args['username'])}
+    res = {'exists': db.user_exists(request.args['username'])}
     return json.dumps(res)
 
 
 if __name__ == '__main__':
     db.init_db()
-    app.run(host='0.0.0.0',debug=True)
+    app.run(host='0.0.0.0', debug=True)
