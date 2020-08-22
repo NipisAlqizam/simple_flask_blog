@@ -6,6 +6,7 @@
 
 {% block css %}
   <link rel="stylesheet" href="{{url_for('static', filename='article.css')}}">
+  <link rel="stylesheet" href="{{url_for('static', filename='comments.css')}}">
 {% endblock %}
 
 {% block content %}
@@ -19,4 +20,25 @@
   {% endif %}
 </div>
 <article>{{text}}</article>
+<div class="comments">
+  {% if session.get('username') != None %}
+    <form action="/comment/{{id}}" method="post">
+      <input type="text" name="comment" id="comment_text" placeholder="Оставьте комментарий">
+      <input type="submit">
+    </form>
+  {% endif %}
+  {% if no_comments %}
+    <div class="comment">
+      Sorry, no comments.
+    </div>
+  {% endif %}
+  {% for comment in comments %}
+  <div class="comment">
+    <div class="username">{{comment.user.username}}</div>
+    <div class="comment_text">
+      {{comment.text}}
+    </div>
+  </div>
+  {% endfor %}
+</div>
 {% endblock %}
