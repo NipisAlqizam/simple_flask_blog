@@ -28,6 +28,7 @@ def forbidden(error):
 def index():
     articles = db.get_articles_preview()
     no_articles = len(articles) == 0
+    print(articles)
     return render_template('main.html', articles=articles, no_articles=no_articles)
 
 

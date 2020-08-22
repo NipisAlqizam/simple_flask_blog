@@ -63,6 +63,8 @@ def get_preview(text: str) -> str:
     if line_break == -1:
         line_break = len(text)
     first_paragraph = text[:line_break]
+    first_paragraph = markdown_to_html(first_paragraph)
+    first_paragraph = remove_html(str(first_paragraph))
     return first_paragraph
 
 
@@ -187,12 +189,22 @@ def get_articles_archive():
 
 
 def markdown_to_html(md: str) -> str:
+    """
+        Возвращает объект Markup с html, соответствующим html разметке 
+        данной статьи в формате markdown.
+    """
     print(repr(md))
     print()
     md = str(Markup.escape(md))
     md = re.sub('^#', '##', md, flags=re.M)
     html = markdown.markdown(md)
     return Markup(html)
+
+
+def remove_html(html: str) -> str:
+    clean_re = re.compile('<.*?>')
+    clean_text = re.sub(clean_re, '', html)
+    return clean_text
 
 
 def get_article_by_id(id):
