@@ -9,7 +9,6 @@ function createUsersTable(users, changed, to_delete) {
         let username = document.createElement('td');
         let author = document.createElement('td');
         let admin = document.createElement('td');
-        let ban = document.createElement('td');
         username.innerText = users[i]['username'];
 
         let author_checkbox = document.createElement('input');
@@ -38,29 +37,10 @@ function createUsersTable(users, changed, to_delete) {
         };
         admin.appendChild(admin_checkbox);
 
-        let ban_button = document.createElement('input');
-        ban_button['type'] = 'button';
-        ban_button['value'] = 'Забанить';
-        ban_button['className'] = 'ban_button';
-        ban_button.onclick = (e) => {
-            if (to_delete.includes(i)) {
-                to_delete = to_delete.filter((v) => {
-                    return v != i
-                });
-                e.target['className'] = 'banButton';
-                e.target['value'] = 'Забанить';
-                return;
-            }
-            to_delete.push(i);
-            e.target['className'] += ' banned';
-            e.target['value'] = 'Забанен';
-        };
-        ban.appendChild(ban_button);
 
         row.appendChild(username);
         row.appendChild(author);
         row.appendChild(admin);
-        row.appendChild(ban);
 
         table.appendChild(row);
     }
