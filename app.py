@@ -150,10 +150,36 @@ def change_password():
     return render_template('change_password.html')
 
 
+@app.route('/admin')
+def admin():
+    if not session['is_admin']:
+        abort(403)
+    return render_template('admin.html')
+
+
 @app.route('/api/user_exists')
 def user_exists():
     res = {'exists': db.user_exists(request.args['username'])}
     return json.dumps(res)
+
+@app.route('/api/get_users')
+def get_users():
+    res = db.get_user_list()
+    return json.dumps(res)
+
+
+@app.route('/api/update_users', methods=['POST'])
+def update_users():
+    changed = json.loads(request.form['changed'])
+    users = db.get_users()
+    for i in range(len(changed)):
+        if len(changed[i]) != 0:
+            print(changed[i])
+            is_author = changed[i].get('author')
+            is_admin = changed[i].get('admin')
+            db.update_user(i+1, is_author, is_admin)
+    return '{"error":"false"}'
+            
 
 
 if __name__ == '__main__':

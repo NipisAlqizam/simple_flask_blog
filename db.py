@@ -123,6 +123,28 @@ def get_user(username: str):
     return User.query.filter_by(username=username).first()
 
 
+def get_user_list() -> list:
+    """
+        Получить список всех пользователей
+        TODO: кроме админа
+    """
+    from models import User
+    users = User.query.order_by(User.id).all()
+    res = []
+    for user in users:
+        d = {}
+        d['username'] = user.username
+        d['is_author'] = user.is_author
+        d['is_admin'] = user.is_admin
+        res.append(d)
+    return res
+
+def get_users():
+    from models import User
+    users = User.query.all()
+    return users
+
+
 def check_user(username: str, password: str) -> bool:
     """
         Проверяет корректность пары логин/пароль.
@@ -181,6 +203,17 @@ def update_user_password(username: str, new_password: str):
     user.password = get_password_hash(new_password)
     db_session.commit()
 
+
+def update_user(id: int, is_author: bool, is_admin: bool):
+    from models import User
+    user = User.query.filter_by(id=id).first()
+    print(user)
+    if is_author != None:
+        user.is_author = is_author
+    if is_admin != None:
+        user.is_admin = is_admin
+    print(is_author, is_admin, user)
+    db_session.commit()
 
 def get_articles_archive():
     """

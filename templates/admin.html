@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Админка
+{% endblock title %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+    <script src="{{ url_for('static', filename='admin.js') }}"></script>
+{% endblock css %}
+
+{% block content %}
+<div class="admin_wrapper">
+    <div class="admin_menu">
+      <ul>
+        <li class="current">Пользователи</li>
+        <li>Описание</li>
+        <li>Дополнительно</li>
+      </ul>
+    </div>
+    <div class="users">
+      <table>
+        <tr>
+          <th>Username</th>
+          <th>Author</th>
+          <th>Admin</th>
+          <th>Ban</th>
+        </tr>
+      </table>
+      <input type="button" value="Применить изменения">
+    </div>
+    <div class="hidden description">
+      <textarea name="desc" id="description_area" rows="20"></textarea>
+      <input type="button" value="Сохранить">
+    </div>
+    <div class="hidden sql">
+      <div class="form">
+        <input type="text">
+        <input type="button" value="Отправить">
+      </div>
+      <table>
+        
+      </table>
+    </div>
+  </div>
+{% endblock content %}

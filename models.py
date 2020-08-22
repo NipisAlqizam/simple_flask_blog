@@ -30,6 +30,9 @@ class User(Base):
         'Article', order_by=Article.id, back_populates='author')
     comments = relationship(
         'Comment', order_by=Article.id, back_populates='user')
+    
+    def __repr__(self):
+        return f'<User "{self.username}", author={self.is_author}, admin={self.is_admin}>'
 
 
 class Comment(Base):

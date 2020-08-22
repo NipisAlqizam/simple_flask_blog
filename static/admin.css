@@ -1,0 +1,82 @@
+.admin_menu {
+    display: inline-block;
+  }
+  .admin_menu ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    padding: 0.5em;
+    margin: 0;
+  }
+  .admin_menu li {
+    border: 1px solid #c8c8c8;
+    margin: 0 0 0.25em 0;
+    padding: 0.125em 0.125em 0.125em 0.25em;
+    cursor: pointer;
+  }
+  .admin_menu .current {
+    font-weight: bold;
+  }
+  .admin_wrapper {
+    display: flex;
+    width: 100%;
+  }
+  .users {
+    flex-grow: 1;
+    margin-top: 1em;
+    /*display: none;*/
+  }
+  .admin_wrapper table {
+    border-collapse: collapse;
+    width: 75%;
+  }
+  .admin_wrapper th, .admin_wrapper td {
+    border: 1px solid #ddd;
+    text-align: center;
+  }
+  .admin_wrapper tr:nth-child(even) {
+    background: #ddd;
+  }
+  .admin_wrapper input[type="button"] {
+    border: none;
+    background: #282828;
+    color: #dedede;
+    font-weight: bold;
+    padding: 0.5em;
+    cursor: pointer;
+  }
+  .admin_wrapper input[type="button"]:hover {
+    background: #dedede;
+    color: #282828;
+  }
+  .admin_wrapper .banned {
+    background: red !important;
+  }
+  
+
+  .description {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  textarea {
+    resize: none;
+    display: block;
+    width: 100%;
+    font-size: 15px;
+  }
+  .description input[type="button"] {
+    margin-top: 1em;
+    font-size: 18px;
+    padding: 1em;
+  }
+
+  .sql input[type="text"] {
+    width: 20em;
+    padding: 0.5em;
+  }
+
+  .hidden {
+    display: none;
+  }
