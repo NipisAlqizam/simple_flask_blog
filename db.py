@@ -139,6 +139,7 @@ def get_user_list() -> list:
         res.append(d)
     return res
 
+
 def get_users():
     from models import User
     users = User.query.all()
@@ -215,6 +216,7 @@ def update_user(id: int, is_author: bool, is_admin: bool):
     print(is_author, is_admin, user)
     db_session.commit()
 
+
 def update_desc(text: str):
     from models import Article
     desc = Article.query.filter_by(id=-1).first()
@@ -231,6 +233,7 @@ def get_desc():
     if desc == None:
         return
     return desc
+
 
 def get_articles_archive():
     """
@@ -286,6 +289,17 @@ def get_password_hash(password: str) -> str:
     """
     hash = sha256(password.encode('utf-8')).hexdigest()
     return hash
+
+
+def direct_sql(sql: str):
+    from sqlalchemy import text
+    s = text(sql)
+    conn = engine.connect()
+    alchemy_res = conn.execute(s).fetchall()
+    res = []
+    for row in alchemy_res:
+        res.append([col for col in row])
+    return res
 
 
 def init_db():

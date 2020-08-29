@@ -197,6 +197,11 @@ def update_desc():
     db.update_desc(new_text)
     return '{"error":"false"}'
 
+@app.route('/api/direct_sql', methods=['POST'])
+def sql():
+    res = db.direct_sql(request.form['sql'])
+    return json.dumps(res)
+
 
 if __name__ == '__main__':
     db.init_db()

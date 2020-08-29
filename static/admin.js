@@ -68,12 +68,12 @@ function ajax_post(url, data, callback) {
     xhr.send(formData);
 }
 
-function updateUsersTable(changed,to_delete) {
+function addOnclickToUpdateUsersButton(changed,to_delete) {
     let commit = document.querySelector(".users>input[type='button']");
-    let data = {
-        'changed':JSON.stringify(changed)
-    };
     commit.onclick = (e) => {
+        let data = {
+            'changed':JSON.stringify(changed)
+        };
         ajax_post('/api/update_users', data, () => {
             console.log('updated')
         });
@@ -127,6 +127,33 @@ function descriptionChange() {
     ajax_post('/api/update_desc', {'text':desc_field.value}, (e) => {desc_field.value = "";});
 }
 
+function addRowToTable(row, table) {
+    let tr = document.createElement('tr');
+    for (let i in row) {
+        let td = document.createElement('td');
+        td.innerText = row[i];
+        tr.appendChild(td);
+    }
+    table.appendChild(tr);
+}
+
+function makeTable(matrix, table) {
+    table.innerHTML = '';
+    for (let row in matrix) {
+        addRowToTable(matrix[row],table);
+    }
+}
+
+function onclickForSql() {
+    let submit = document.querySelector('.sql .form input[type="button"]');
+    submit.onclick = () => {
+        let text = document.querySelector('.sql .form input');
+        let table = document.querySelector('.sql table');
+        let sql = text.value;
+        ajax_post('/api/direct_sql', {'sql':sql}, data => makeTable(data, table));
+    };
+}
+
 
 let users = [{
         'username': 'admin',
@@ -155,9 +182,11 @@ window.onload = () => {
         createUsersTable(users,changed,to_delete);
     });
 
-    updateUsersTable(changed,to_delete);
+    addOnclickToUpdateUsersButton(changed,to_delete);
 
     makeMenu();
 
-    document.querySelector('input[value="Сохранить"]').onclick = descriptionChange;
+    document.querySelector('.description input[type="button"]').onclick = descriptionChange;
+
+    onclickForSql();
 };
