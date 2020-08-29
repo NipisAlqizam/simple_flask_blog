@@ -173,12 +173,16 @@ def user_exists():
 
 @app.route('/api/get_users')
 def get_users():
+    if 'is_admin' not in session or not session['is_admin']:
+        abort(403)
     res = db.get_user_list()
     return json.dumps(res)
 
 
 @app.route('/api/update_users', methods=['POST'])
 def update_users():
+    if 'is_admin' not in session or not session['is_admin']:
+        abort(403)
     changed = json.loads(request.form['changed'])
     users = db.get_users()
     for i in range(len(changed)):
@@ -186,19 +190,23 @@ def update_users():
             print(changed[i])
             is_author = changed[i].get('author')
             is_admin = changed[i].get('admin')
-            db.update_user(i+1, is_author, is_admin)
+            db.update_user(i+1+1, is_author, is_admin) # первая 1 - потому что индексы, вторая - потому что админ
     return '{"error":"false"}'
 
 
 
 @app.route('/api/update_desc', methods=['POST'])
 def update_desc():
+    if 'is_admin' not in session or not session['is_admin']:
+        abort(403)
     new_text = request.form['text']
     db.update_desc(new_text)
     return '{"error":"false"}'
 
 @app.route('/api/direct_sql', methods=['POST'])
 def sql():
+    if 'is_admin' not in session or not session['is_admin']:
+        abort(403)
     res = db.direct_sql(request.form['sql'])
     return json.dumps(res)
 
