@@ -157,6 +157,15 @@ def admin():
     return render_template('admin.html')
 
 
+@app.route('/about')
+def about():
+    desc = db.get_desc()
+    if desc == None:
+        abort(404)
+    return render_template('article.html',title=desc.title, text=db.markdown_to_html(desc.text),
+    id=desc.id, description=True)
+
+
 @app.route('/api/user_exists')
 def user_exists():
     res = {'exists': db.user_exists(request.args['username'])}
@@ -179,7 +188,14 @@ def update_users():
             is_admin = changed[i].get('admin')
             db.update_user(i+1, is_author, is_admin)
     return '{"error":"false"}'
-            
+
+
+
+@app.route('/api/update_desc', methods=['POST'])
+def update_desc():
+    new_text = request.form['text']
+    db.update_desc(new_text)
+    return '{"error":"false"}'
 
 
 if __name__ == '__main__':

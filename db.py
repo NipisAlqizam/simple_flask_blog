@@ -96,7 +96,7 @@ def get_articles_preview():
         author - ник автора статьи
     """
     from models import Article
-    articles = Article.query.all()
+    articles = Article.query.filter(Article.id != -1).all()
     res = []
     for article in articles:
         id = article.id
@@ -215,6 +215,23 @@ def update_user(id: int, is_author: bool, is_admin: bool):
     print(is_author, is_admin, user)
     db_session.commit()
 
+def update_desc(text: str):
+    from models import Article
+    desc = Article.query.filter_by(id=-1).first()
+    if desc == None:
+        desc = Article(id=-1, title='О блоге')
+        db_session.add(desc)
+    desc.text = text
+    db_session.commit()
+
+
+def get_desc():
+    from models import Article
+    desc = Article.query.filter_by(id=-1).first()
+    if desc == None:
+        return
+    return desc
+
 def get_articles_archive():
     """
         Возвращает словарь, где ключами являются года написания статей, а
@@ -222,7 +239,7 @@ def get_articles_archive():
         значениями - кортежи из номера статьи и её заголовка
     """
     from models import Article
-    articles = Article.query.all()
+    articles = Article.query.filter(Article.id != -1).all()
     res = {}
     for article in articles:
         if article.created.year not in res:

@@ -46,7 +46,7 @@ function createUsersTable(users, changed, to_delete) {
     }
 }
 
-function ajax_post(url, changed, callback) {
+function ajax_post(url, data, callback) {
     let xhr = new XMLHttpRequest();
     xhr.onload = () => {
         if (xhr.status == 200) {
@@ -61,15 +61,20 @@ function ajax_post(url, changed, callback) {
         }
     };
     let formData = new FormData();
-    formData.append('changed', JSON.stringify(changed));
+    for (let key in data) {
+        formData.append(key,data[key]);
+    }
     xhr.open("POST", url, true);
     xhr.send(formData);
 }
 
 function updateUsersTable(changed,to_delete) {
     let commit = document.querySelector(".users>input[type='button']");
+    let data = {
+        'changed':JSON.stringify(changed)
+    };
     commit.onclick = (e) => {
-        ajax_post('/api/update_users', changed, () => {
+        ajax_post('/api/update_users', data, () => {
             console.log('updated')
         });
     };
@@ -117,7 +122,10 @@ function ajax(url, callback) {
     xhr.send();
 }
 
-
+function descriptionChange() {
+    let desc_field = document.getElementsByName('desc')[0];
+    ajax_post('/api/update_desc', {'text':desc_field.value}, (e) => {desc_field.value = "";});
+}
 
 
 let users = [{
@@ -150,4 +158,6 @@ window.onload = () => {
     updateUsersTable(changed,to_delete);
 
     makeMenu();
+
+    document.querySelector('input[value="Сохранить"]').onclick = descriptionChange;
 };

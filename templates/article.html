@@ -12,14 +12,17 @@
 {% block content %}
 <div class="title-wrapper">
   <h1>{{title}}</h1>
-  <div class="info">
-    Создано {{date}} пользователем {{author}}.
-  </div>
-  {% if session['username'] == author or session['is_admin'] %}
+  {% if not description %}
+    <div class="info">
+      Создано {{date}} пользователем {{author}}.
+    </div>
+  {% endif %}
+  {% if not description and (session['username'] == author or session['is_admin']) %}
     <a href="{{url_for('edit', id=id)}}" class="update">Редактировать</a>
   {% endif %}
 </div>
 <article>{{text}}</article>
+{% if not description %}
 <div class="comments">
   {% if session.get('username') != None %}
     <form action="/comment/{{id}}" method="post">
@@ -32,13 +35,14 @@
       Sorry, no comments.
     </div>
   {% endif %}
-  {% for comment in comments %}
-  <div class="comment">
-    <div class="username">{{comment.user.username}}</div>
-    <div class="comment_text">
-      {{comment.text}}
+    {% for comment in comments %}
+    <div class="comment">
+      <div class="username">{{comment.user.username}}</div>
+      <div class="comment_text">
+        {{comment.text}}
+      </div>
     </div>
+    {% endfor %}
   </div>
-  {% endfor %}
-</div>
+  {% endif %}
 {% endblock %}
