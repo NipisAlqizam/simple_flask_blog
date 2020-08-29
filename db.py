@@ -126,12 +126,13 @@ def get_user(username: str):
 def get_user_list() -> list:
     """
         Получить список всех пользователей
-        TODO: кроме админа
     """
     from models import User
     users = User.query.order_by(User.id).all()
     res = []
     for user in users:
+        if user.username == 'admin':
+            continue
         d = {}
         d['username'] = user.username
         d['is_author'] = user.is_author
